@@ -15,7 +15,7 @@ public class PayloadSuffixArrayTest {
 	@Test
 	public void testCreateEmpty() {
 		final PayloadSuffixArray<String> suffixArray = PayloadSuffixArray.<String>builder().build();
-		Assert.assertTrue(suffixArray.getSuffixes().isEmpty());
+		Assert.assertEquals(0, suffixArray.getSuffixes().length);
 	}
 
 	@Test
@@ -23,10 +23,10 @@ public class PayloadSuffixArrayTest {
 		final PayloadSuffixArray<String> suffixArray = PayloadSuffixArray.<String>builder()
 				.addWord("bam", "")
 				.build();
-		final List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
-		Assert.assertEquals("am", suffixes.get(0).getWord());
-		Assert.assertEquals("bam", suffixes.get(1).getWord());
-		Assert.assertEquals("m", suffixes.get(2).getWord());
+		final PayloadSuffix[] suffixes = suffixArray.getSuffixes();
+		Assert.assertEquals("am", suffixes[0].getWord());
+		Assert.assertEquals("bam", suffixes[1].getWord());
+		Assert.assertEquals("m", suffixes[2].getWord());
 	}
 
 	@Test
@@ -36,8 +36,8 @@ public class PayloadSuffixArrayTest {
 				.addWord("bam", "")
 				.addWord("bam", "")
 				.build();
-		final List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
-		Assert.assertEquals(3, suffixes.size());
+		final PayloadSuffix[] suffixes = suffixArray.getSuffixes();
+		Assert.assertEquals(3, suffixes.length);
 	}
 
 	@Test

@@ -1,9 +1,6 @@
 package com.gustavvy.suffixarray;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * PayloadSuffixArray.java
@@ -13,7 +10,7 @@ import java.util.List;
 public class PayloadSuffixArray<T> {
 
 	private int textLen = 0;
-	private ArrayList<PayloadSuffix> suffixes;
+	private PayloadSuffix[] suffixes;
 	private final ArrayList<T> payloads = new ArrayList<>();
 	private final ArrayList<String> words = new ArrayList<>();
 	private final SuffixArrayConfig config;
@@ -28,14 +25,15 @@ public class PayloadSuffixArray<T> {
 	}
 
 	private void buildSuffixArray() {
-		suffixes = new ArrayList<>(words.size());
+		suffixes = new PayloadSuffix[textLen];
+		int k = 0;
 		for (int i = 0; i < words.size(); i++) {
 			final String word = words.get(i);
 			for (int j = 0; j < word.length(); j++) {
-				suffixes.add(new PayloadSuffix(word.substring(j), i));
+				suffixes[k++] = new PayloadSuffix(word.substring(j), i);
 			}
 		}
-		Collections.sort(suffixes);
+		Arrays.sort(suffixes);
 		uniqueWords.clear();
 	}
 
@@ -63,7 +61,7 @@ public class PayloadSuffixArray<T> {
 		return s1.substring(0, len1).compareTo(s2.substring(0, len2));
 	}
 
-	public ArrayList<PayloadSuffix> getSuffixes() {
+	public PayloadSuffix[] getSuffixes() {
 		return suffixes;
 	}
 
@@ -98,7 +96,7 @@ public class PayloadSuffixArray<T> {
 	}
 
 	private T suffixToPayload(final int index) {
-		return payloads.get(suffixes.get(index).getPayloadIndex());
+		return payloads.get(suffixes[index].getPayloadIndex());
 	}
 
 	private int binarySearch(String pattern, boolean first) {
@@ -111,7 +109,7 @@ public class PayloadSuffixArray<T> {
 		int index = -1;
 		while (l <= r) {
 			final int mid = (l + r) / 2;
-			final int res = strncmp(pattern, suffixes.get(mid).getWord(), m);
+			final int res = strncmp(pattern, suffixes[mid].getWord(), m);
 			if (res == 0) {
 				index = mid;
 				if (first) {
