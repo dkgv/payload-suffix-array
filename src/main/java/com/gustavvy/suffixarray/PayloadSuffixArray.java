@@ -146,13 +146,20 @@ public class PayloadSuffixArray<T> {
 			return this;
 		}
 
-		public PayloadSuffixArrayBuilder<T> addWord(final List<String> words, final List<T> payloads) {
+		public PayloadSuffixArrayBuilder<T> addBulkWords(final List<String> words, final List<T> payloads) {
 			assert words.size() == payloads.size();
 
 			for (int i = 0; i < words.size(); i++) {
 				addWord(words.get(i), payloads.get(i));
 			}
 
+			return this;
+		}
+
+		public PayloadSuffixArrayBuilder<T> addBulkWords(final Set<Map.Entry<String, T>> pairs) {
+			for (Map.Entry<String, T> entry : pairs) {
+				addWord(entry.getKey(), entry.getValue());
+			}
 			return this;
 		}
 
