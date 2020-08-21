@@ -3,7 +3,6 @@ package com.gustavvy.suffixarray;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class PayloadSuffixArrayTest {
 		final PayloadSuffixArray<String> suffixArray = PayloadSuffixArray.<String>builder()
 				.addWord("bam", "")
 				.build();
-		List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
+		final List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
 		Assert.assertEquals("am", suffixes.get(0).getWord());
 		Assert.assertEquals("bam", suffixes.get(1).getWord());
 		Assert.assertEquals("m", suffixes.get(2).getWord());
@@ -33,11 +32,11 @@ public class PayloadSuffixArrayTest {
 	@Test
 	public void testDisallowDuplicates() {
 		final PayloadSuffixArray<String> suffixArray = PayloadSuffixArray.<String>builder()
-				.setDisallowDuplicates(true)
+				.disallowDuplicates()
 				.addWord("bam", "")
 				.addWord("bam", "")
 				.build();
-		List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
+		final List<PayloadSuffix> suffixes = suffixArray.getSuffixes();
 		Assert.assertEquals(3, suffixes.size());
 	}
 
@@ -83,7 +82,7 @@ public class PayloadSuffixArrayTest {
 				.addWord("bam", "1")
 				.addWord("bam", "2")
 				.build();
-		ArrayList<String> all = suffixArray.findAll("bam");
+		final List<String> all = suffixArray.findAll("bam");
 		Assert.assertEquals("1", all.get(0));
 		Assert.assertEquals("2", all.get(1));
 	}

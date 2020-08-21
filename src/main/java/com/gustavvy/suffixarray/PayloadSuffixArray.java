@@ -71,7 +71,7 @@ public class PayloadSuffixArray<T> {
 		return binarySearch(pattern, true) != -1;
 	}
 
-	public ArrayList<T> findAll(final String pattern) {
+	public List<T> findAll(final String pattern) {
 		final int firstIndex = binarySearch(pattern, true);
 
 		if (firstIndex == -1) {
@@ -133,8 +133,8 @@ public class PayloadSuffixArray<T> {
 		private final SuffixArrayConfig config = new SuffixArrayConfig();
 		private final PayloadSuffixArray<T> suffixArray = new PayloadSuffixArray<>(config);
 
-		public PayloadSuffixArrayBuilder<T> setDisallowDuplicates(final boolean disallowDuplicates) {
-			config.setDisallowDuplicates(disallowDuplicates);
+		public PayloadSuffixArrayBuilder<T> disallowDuplicates() {
+			config.setDisallowDuplicates(true);
 			return this;
 		}
 
